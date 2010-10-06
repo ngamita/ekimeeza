@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- cpedialog: http://code.google.com/p/cpedialog created by cpedia: http://blog.cpedia.com -->
+    <meta name="keywords" content="appengine,python,django,cpedialog,free,open source,cpedia,blog" />
+    <meta name="description" content="ngamita is an open source blog program can be hosted on google appengine." />
+    <meta name="author" content="ngamita, Rebellious ngamita, http://ngamitas.appspot.com" />
+    <meta name="copyright" content="2010 http://ngamitas.appspot.com" />
+    <title>{% block title %}{{title}}{% endblock %}</title>    
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/get/get-min.js" ></script>
+    {% block header %}
+    {% endblock %}
+
+    <link rel="alternate" type="application/atom+xml" title="{{ BLOG.title }}" href="{{ BLOG.root_url }}/atom" />
+    {% for sheet in stylesheets %}
+        <link type="text/css" rel="stylesheet" href="{{ sheet.filename }}"/>
+    {% endfor %}
+    <!-- yui -->
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" />
+</head>
+<body class="yui-skin-sam short-head">
+<div id="doc2" class="yui-t5">
+    <div id="hd">
+        {% include "main_top.html" %}
+    </div>
+    {% block main_body %}
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <div id=logo style='BACKGROUND-IMAGE: url({{logoImages|random}});margin-bottom:10px'></div>
+                {% block blogcontainer %}
+                <div class="yui-gc" id="blogcontainer">
+                    <div class="yui-u first" id="grid_blog">
+                        {% block blog %}
+                        {% endblock %}
+                    </div>
+                    <div class="yui-u" id="grid_menu_right">
+                        {% include "menu_right.html" %}
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+        <div class="yui-b">
+            {% include "menu_right_right.html" %}
+        </div>
+    </div>
+    {% endblock %}
+    <div id="ft">
+        {% include "footer.html" %}
+    </div>
+</div>
+<script type="text/javascript" src="/jscripts/blog_list_collapse.js"></script>
+<script type="text/javascript" src="/jscripts/syntaxhighlighter-loader.js"></script>
+<script type="text/javascript">
+  var syntaxhighlighter_url = "/jscripts/syntaxhighlighter/";
+  YAHOO.highlighter.loader.loadLibs(syntaxhighlighter_url);
+ </script>
+
+{% include "include/google_ad_content.html" %}
+
+{% if BLOG.analytics_enable %}
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("{{ BLOG.analytics_web_property_id }}");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+{% endif %}
+</body>
+</html>
